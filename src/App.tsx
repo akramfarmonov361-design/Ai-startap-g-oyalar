@@ -2,15 +2,15 @@ import { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI, Type } from '@google/genai';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
-import { 
-  Sparkles, 
-  Rocket, 
-  BrainCircuit, 
-  Globe, 
-  HeartPulse, 
-  GraduationCap, 
-  Coins, 
-  Video, 
+import {
+  Sparkles,
+  Rocket,
+  BrainCircuit,
+  Globe,
+  HeartPulse,
+  GraduationCap,
+  Coins,
+  Video,
   Copy,
   CheckCircle2,
   Loader2,
@@ -65,7 +65,7 @@ export default function App() {
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       const categoryName = CATEGORIES.find(c => c.id === activeCategory)?.name || 'Kutilmagan g\'oya';
-      
+
       const prompt = `Siz 2026-yildagi vizyoner startap asoschisi va texnologiya ekspertisiz.
       Google AI Studio yordamida qurilishi mumkin bo'lgan yuqori innovatsion, hayotiy startap g'oyasi yoki loyiha promptini o'ylab toping.
       G'oya 2026-yilda mavjud bo'lgan eng so'nggi AI imkoniyatlaridan (masalan, ilg'or multimodal fikrlash, real vaqtda audio/video, avtonom agentlar, fazoviy tushunish va h.k.) foydalanishi SHART.
@@ -79,7 +79,7 @@ export default function App() {
       Batafsil va amaliy javob bering.`;
 
       const response = await ai.models.generateContent({
-        model: 'gemini-3.1-pro-preview',
+        model: 'gemini-3-flash-preview',
         contents: prompt,
         config: {
           responseMimeType: 'application/json',
@@ -129,11 +129,11 @@ export default function App() {
         useCORS: true,
       });
       const imgData = canvas.toDataURL('image/png');
-      
+
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-      
+
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save(`${idea.title.replace(/\\s+/g, '_').toLowerCase()}_2026.pdf`);
     } catch (error) {
@@ -180,7 +180,7 @@ export default function App() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        
+
         {/* Sidebar Controls */}
         <div className="lg:col-span-4 space-y-8">
           <div>
@@ -202,11 +202,10 @@ export default function App() {
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 border ${
-                      isActive 
-                        ? 'bg-white/10 border-white/20 text-white shadow-[0_0_15px_rgba(255,255,255,0.05)]' 
-                        : 'bg-transparent border-transparent text-white/60 hover:bg-white/5 hover:text-white'
-                    }`}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 border ${isActive
+                      ? 'bg-white/10 border-white/20 text-white shadow-[0_0_15px_rgba(255,255,255,0.05)]'
+                      : 'bg-transparent border-transparent text-white/60 hover:bg-white/5 hover:text-white'
+                      }`}
                   >
                     <Icon className={`w-4 h-4 ${isActive ? 'text-indigo-400' : ''}`} />
                     {cat.name}
@@ -246,7 +245,7 @@ export default function App() {
             <p className="text-xs text-white/50 leading-relaxed mb-4">
               Har 3 soatda avtomatik ravishda 5 ta yangi g'oyani Telegram botingizga yuborish uchun AI Studio "Secrets" bo'limida <code>TELEGRAM_BOT_TOKEN</code> va <code>TELEGRAM_CHAT_ID</code> ni sozlang.
             </p>
-            
+
             {telegramStatus === true ? (
               <button
                 onClick={triggerTelegramBot}
@@ -307,7 +306,7 @@ export default function App() {
 
           {idea && !isGenerating && (
             <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              
+
               {/* Action Buttons (Not included in PDF) */}
               <div className="flex justify-end gap-3 mb-2" data-html2canvas-ignore="true">
                 <button
