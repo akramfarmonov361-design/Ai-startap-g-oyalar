@@ -1,0 +1,29 @@
+{
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
+    "framework": "vite",
+    "crons": [
+        {
+            "path": "/api/cron",
+            "schedule": "0 */3 * * *"
+        }
+    ],
+    "rewrites": [
+        {
+            "source": "/api/trigger-telegram",
+            "destination": "/api/trigger-telegram"
+        },
+        {
+            "source": "/api/telegram-status",
+            "destination": "/api/telegram-status"
+        },
+        {
+            "source": "/api/cron",
+            "destination": "/api/cron"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
